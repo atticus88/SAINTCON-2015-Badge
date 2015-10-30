@@ -1,0 +1,3 @@
+#Ignore compiled Lua files
+*.lc
+

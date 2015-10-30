@@ -1,0 +1,48 @@
+#!/bin/bash
+PORT=/dev/tty.usbmodem1451
+COLOR=white
+
+function usage()
+{
+    echo "Flash SAINTCON 2015 Badges."
+    echo ""
+    echo "./flash"
+    echo "\t-h --help"
+    echo "\t--port=$PORT"
+    echo "\t--color=$COLOR"
+    echo ""
+}
+
+while [ "$1" != "" ]; do
+    PARAM=`echo $1 | awk -F= '{print $1}'`
+    VALUE=`echo $1 | awk -F= '{print $2}'`
+    case $PARAM in
+        -h | --help)
+            usage
+            exit
+            ;;
+        --port)
+            PORT=$VALUE
+            ;;
+        --color)
+            COLOR=$VALUE
+            ;;
+        *)
+            echo "ERROR: unknown parameter \"$PARAM\""
+            usage
+            exit 1
+            ;;
+    esac
+    shift
+done
+
+# BOD 
+
+avrdude -p x256a3bu -c avrispmkii -U fuse2:w:0xbf:m  -U boot:w:atxmega256a3bu_haxdmod.hex
+avrdude -p x256a3bu -c avrispmkii -U fuse2:w:0xbd:m -U fuse5:w:0xd8:m
+sleep 2
+avrdude -p x256a3bu -c avrispmkii -U flash:w:esp-flasher.hex
+sleep 5
+python esptool.py --baud 115200 --port $PORT write_flash --flash_mode dio --flash_size 32m 0x00000 saintcon_nodemcu_spiffs_v1.0.1-fw.e56483c.20151027.115200.bin #saintcon_nodemcu_spiffs_v1.0.1-fw.da54a1b.20151027.115200.bin #saintcon_nodemcu_spiffs_vconmods140.14ce2dc.20151022.115200.bin #saintcon_nodemcu_spiffs_v1.4.0.4.0c21a4f.20151021.115200.bin #saintcon_nodemcu_spiffs_vconmods140.14ce2dc.20151022.115200.bin
+sleep 2
+avrdude -p x256a3bu -c avrispmkii -U fuse2:w:0xbd:m -U fuse5:w:0xd8:m -U flash:w:app-$COLOR.hex

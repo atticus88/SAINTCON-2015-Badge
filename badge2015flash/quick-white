@@ -1,0 +1,4 @@
+
+avrdude -p x256a3bu -c avrispmkii -U fuse2:w:0xbd:m -U fuse5:w:0xd8:m
+avrdude -p x256a3bu -c avrispmkii -U fuse2:w:0xbd:m -U fuse5:w:0xd8:m -U flash:w:app-white.hex
+

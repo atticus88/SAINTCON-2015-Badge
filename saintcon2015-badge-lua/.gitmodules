@@ -1,0 +1,8 @@
+[submodule "esptool"]
+	path = esptool
+	url = git@github.com:themadinventor/esptool.git
+	branch = master
+[submodule "nodemcu-uploader"]
+	path = nodemcu-uploader
+	url = git@github.com:karrots/nodemcu-uploader.git
+	branch = master

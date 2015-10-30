@@ -1,0 +1,22 @@
+diff --git a/src/main.c b/src/main.c
+index 2a2a058..1df194d 100644
+--- a/src/main.c
++++ b/src/main.c
+@@ -7,7 +7,7 @@
+ #define LOG_PAGE_SIZE       256
+ 
+ #define MIN_SIZE 64*1024
+-#define MAX_SIZE 192*1024
++#define MAX_SIZE 3*1024*1024
+ 
+ u32_t g_ROMSize = MAX_SIZE;
+ 
+@@ -213,7 +213,7 @@ int main(int argc, char **args) {
+ 	{
+ 		g_ROMSize = atoi(args[1]) * 1024;
+ 		g_ROMSize &= 0xFFFFF000; //align to 4K
+-		
++
+ 		if( MIN_SIZE > g_ROMSize)
+ 		{
+ 			g_ROMSize = MIN_SIZE;

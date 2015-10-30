@@ -1,0 +1,14 @@
+[{
+    "UUID": "84542EEF5596",
+    "hackerscore": "55555",
+    "hackerrank": "1",
+    "location": "1",
+    "bcastmessage": "This is a bcast message",
+    "pmessage": "This is a private message",
+    "info": {
+        "first_name": "Bobby2",
+        "last_name": "Hacker",
+        "org": "SaintCon",
+        "handle": "nilhandle"
+    }
+}]
