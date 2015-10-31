@@ -1,5 +1,9 @@
 ## SaintCon Badge 2015
 
+### View the Presentation
+
+You can view our presentation about the project on [YouTube](https://youtu.be/g20mdvsHHlY), and view the slides [here](https://docs.google.com/presentation/d/1DdALhMUuNWNRxAOWQyzCzernyqPwKxijxxV0nVtLUcg/).
+
 ### Getting Started
 #### XMega-A3BU Xplained 
 * For PDI programming cut jumper to disconnect JTAG from TDO from PDI DATA
