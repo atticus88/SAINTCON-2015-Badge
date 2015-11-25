@@ -482,21 +482,76 @@ bool badge_registerd(void) {
         count++;
     }
     esp8266_wifi_command("=require(\"scmqtt\"):frombadge(\"color\", \"purple\")\r\n");
-    if (registered != 0x01) {
-        //LED_On(LED0);
-        while(!esp_received_uuid);
-        draw_background();
-        gfx_draw_string_aligned("Registration Code", gfx_get_width() / 2, 2, &sysfont, GFX_COLOR_BLACK, GFX_COLOR_WHITE, TEXT_POS_CENTER_X, TEXT_ALIGN_LEFT);
-        gfx_draw_string_aligned(esp_uuid, gfx_get_width() / 2, 50, &sysfont, GFX_COLOR_BLACK, GFX_COLOR_WHITE, TEXT_POS_CENTER_X, TEXT_ALIGN_CENTER);
+    // if (registered != 0x01) {
+    //     //LED_On(LED0);
+    //     while(!esp_received_uuid);
+    //     draw_background();
+    //     gfx_draw_string_aligned("Registration Code", gfx_get_width() / 2, 2, &sysfont, GFX_COLOR_BLACK, GFX_COLOR_WHITE, TEXT_POS_CENTER_X, TEXT_ALIGN_LEFT);
+    //     gfx_draw_string_aligned(esp_uuid, gfx_get_width() / 2, 50, &sysfont, GFX_COLOR_BLACK, GFX_COLOR_WHITE, TEXT_POS_CENTER_X, TEXT_ALIGN_CENTER);
 
-        while (!esp_received_fname && !esp_received_lname && !esp_received_org) {
-            esp8266_check_buffer();
+    //     while (!esp_received_fname && !esp_received_lname && !esp_received_org) {
+    //         esp8266_check_buffer();
+    //     }
+    //
+
+        uint8_t *fname = "FirstName";
+        uint8_t *lname = "LastName";
+        uint8_t *handle = "Handle";
+        uint8_t *company = "Company";
+
+        uint8_t attendee_fname[AT45DBX_SECTOR_SIZE];
+        for(uint16_t i=0;i<AT45DBX_SECTOR_SIZE;i++) {
+            if (i < strlen(fname)) {
+                attendee_fname[i] = fname[i];
+            } else {
+                attendee_fname[i]=0x00;
+            }
         }
 
-    } else {
-        //LED_On(LED0);
+        at45dbx_write_sector_open(FNAME_SECTOR);
+        at45dbx_write_sector_from_ram(attendee_fname);
+        at45dbx_write_close();
+
+        uint8_t attendee_lname[AT45DBX_SECTOR_SIZE];
+        for(uint16_t i=0;i<AT45DBX_SECTOR_SIZE;i++) {
+            if (i < strlen(lname)) {
+                attendee_lname[i] = lname[i];
+            } else {
+                attendee_lname[i]=0x00;
+            }
+        }
+
+        at45dbx_write_sector_open(LNAME_SECTOR);
+        at45dbx_write_sector_from_ram(attendee_lname);
+        at45dbx_write_close();
+
+        uint8_t attendee_handle[AT45DBX_SECTOR_SIZE];
+        for(uint16_t i=0;i<AT45DBX_SECTOR_SIZE;i++) {
+            if (i < strlen(handle)) {
+                attendee_handle[i] = handle[i];
+            } else {
+                attendee_handle[i]=0x00;
+            }
+        }
+
+        at45dbx_write_sector_open(HANDLE_SECTOR);
+        at45dbx_write_sector_from_ram(attendee_handle);
+        at45dbx_write_close();
+
+        uint8_t attendee_company[AT45DBX_SECTOR_SIZE];
+        for(uint16_t i=0;i<AT45DBX_SECTOR_SIZE;i++) {
+            if (i < strlen(company)) {
+                attendee_company[i] = company[i];
+            } else {
+                attendee_company[i]=0x00;
+            }
+        }
+
+        at45dbx_write_sector_open(ORG_SECTOR);
+        at45dbx_write_sector_from_ram(attendee_company);
+        at45dbx_write_close();
+
         return true;
-    }
 
     
     for(uint16_t i=0;i<AT45DBX_SECTOR_SIZE;i++) {
