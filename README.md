@@ -48,7 +48,7 @@ Example code doing OTA updates over Bluetooth [here](https://github.com/neonquil
 Use the following command to flash the xboot boot-loader:
 
 ```
-$ avrdude -p atxmega256a3bu -P usb -c avrispmkII -U flash:w:xboot-boot.hex
+$ avrdude -p atxmega256a3bu -P usb -c avrispmkII -U boot:w:xboot-boot.hex
 ```
 
 ### Compile Application
